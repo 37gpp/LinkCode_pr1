@@ -1,60 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Team Task Tracker</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+// Select form and table
+const form = document.querySelector("form");
+const table = document.querySelector("table");
 
-    <h1>Team Task & Project Tracking</h1>
+// Select inputs safely
+const taskInput = document.querySelector('input[placeholder="Enter task name"]');
+const assignedInput = document.querySelector('input[placeholder="Team member name"]');
+const deadlineInput = document.querySelector('input[type="date"]');
+const statusSelect = document.querySelector("select");
 
-    <!-- Task Form -->
-    <div class="task-form">
-        <h2>Add New Task</h2>
+form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Stop page reload
 
-        <form>
-            <label>Task Name:</label><br>
-            <input type="text" placeholder="Enter task name"><br><br>
+    const taskName = taskInput.value.trim();
+    const assignedTo = assignedInput.value.trim();
+    const deadline = deadlineInput.value;
+    const status = statusSelect.value;
 
-            <label>Assigned To:</label><br>
-            <input type="text" placeholder="Team member name"><br><br>
+    // Validation
+    if (taskName === "" || assignedTo === "" || deadline === "") {
+        alert("Please fill all fields");
+        return;
+    }
 
-            <label>Deadline:</label><br>
-            <input type="date"><br><br>
+    // Insert new row
+    const newRow = table.insertRow(-1);
+    newRow.insertCell(0).innerText = taskName;
+    newRow.insertCell(1).innerText = assignedTo;
+    newRow.insertCell(2).innerText = deadline;
+    newRow.insertCell(3).innerText = status;
 
-            <label>Status:</label><br>
-            <select>
-                <option>To-Do</option>
-                <option>In-Progress</option>
-                <option>Completed</option>
-            </select><br><br>
-
-            <button type="submit">Add Task</button>
-        </form>
-    </div>
-
-    <!-- Task List -->
-    <div class="task-list">
-        <h2>Task List</h2>
-
-        <table border="1">
-            <tr>
-                <th>Task</th>
-                <th>Assigned To</th>
-                <th>Deadline</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>Website Design</td>
-                <td>Alice</td>
-                <td>20-12-2025</td>
-                <td>In-Progress</td>
-            </tr>
-        </table>
-    </div>
-
-    <script src="js/script.js"></script>
-
-</body>
-</html>
+    // Reset form
+    form.reset();
+});
